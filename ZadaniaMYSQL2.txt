@@ -1,0 +1,11 @@
+/Zad1
+
+DELETE FROM postac WHERE rodzaj = "wiking" and id_postaci != 1 order by wiek desc limit 2;
+
+mysql> ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_1;
+mysql> ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+mysql> ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
+mysql> ALTER TABLE postac MODIFY id_postaci INT;
+ALTER TABLE postac DROP PRIMARY KEY;
+
+
