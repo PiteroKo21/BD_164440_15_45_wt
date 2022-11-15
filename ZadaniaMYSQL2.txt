@@ -9,3 +9,6 @@ mysql> ALTER TABLE postac MODIFY id_postaci INT;
 ALTER TABLE postac DROP PRIMARY KEY;
 
 
+
+
+
