@@ -1,0 +1,8 @@
+/Zad1
+
+SELECT AVG(waga) AS sredniaWaga FROM kreatura;
+SELECT AVG(waga) AS sredniaWaga, COUNT(idKreatury) AS liczbaKreatur FROM kreatura GROUP BY rodzaj;
+SELECT rodzaj AS rodzajKreatury, YEAR(dataUr) AS sredniWiek FROM kreatura GROUP BY rodzaj;
+
+/Zad2
+ SELECT rodzaj AS rodzajZasobu, AVG(waga) AS sredniaWaga FROM zasob GROUP BY rodzaj;
