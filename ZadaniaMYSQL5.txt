@@ -1,0 +1,41 @@
+/Zad1.
+
+create table kreatura2 like wikingowie.kreatura;
+
+INSERT INTO kreatura2 SELECT * from wikingowie.kreatura;
+
+create table uczestnicy  like wikingowie.uczestnicy;
+
+INSERT INTO uczestnicy SELECT * from wikingowie.uczestnicy;
+
+create table etapy_wyprawy like wikingowie.etapy_wyprawy;
+
+INSERT INTO etapy_wyprawy SELECT * from wikingowie.etapy_wyprawy;
+
+create table sektor like wikingowie.sektor;
+
+INSERT INTO sektor SELECT * from wikingowie.sektor;
+
+create table wyprawa like wikingowie.wyprawa;
+
+INSERT INTO wyprawa SELECT * from wikingowie.wyprawa;
+
+(osoby z wyprawy)select kreatura.nazwa, uczestnicy.id_wyprawy FROM kreatura INNER JOIN uczestnicy ON kreatura.idKreatury = uczestnicy.id_uczestnika;
+(osoby nie z wyprawy)SELECT nazwa FROM kreatura WHERE nazwa NOT IN(SELECT DISTINCT kreatura.nazwa FROM kreatura INNER JOIN uczestnicy ON kreatura.idKreatury=uczestnicy.id_uczestnika);
+
+SELECT wyprawa.nazwa, SUM(ekwipunek.ilosc) FROM wyprawa INNER JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy INNER JOIN ekwipunek ON uczestnicy.id_uczestnika=ekwipunek.idKreatury GROUP BY wyprawa.nazwa;
+
+/Zad2.
+SELECT wyprawa.nazwa, COUNT(uczestnicy.id_uczestnika) AS uczestnicy, GROUP_CONCAT(kreatura.nazwa) as wojownicy FROM wyprawa NATURAL JOIN uczestnicy INNER JOIN kreatura ON kreatura.idKreatury=uczestnicy.id_uczestnika GROUP BY wyprawa.nazwa;
+
+SELECT etapy_wyprawy.idEtapu, sektor.nazwa, kreatura.nazwa FROM wyprawa INNER JOIN etapy_wyprawy ON wyprawa.id_wyprawy=etapy_wyprawy.idWyprawy INNER JOIN sektor ON sektor.id_sektora=etapy_wyprawy.sektor INNER JOIN kreatura ON wyprawa.kierownik=kreatura.idKreatury ORDER BY wyprawa.data_rozpoczecia ASC, etapy_wyprawy.kolejnosc ASC;
+ 
+/Zad3.
+SELECT sektor.nazwa,etapy_wyprawy.sektor FROM sektor LEFT JOIN etapy_wyprawy ON etapy_wyprawy.sektor=sektor.id_sektora GROUP BY sektor.nazwa;
+
+SELECT kreatura.nazwa, IF(COUNT(uczestnicy.id_uczestnika),"bral udzial w wyprawie","nie bral udzialu w wyprawie") AS wynik FROM kreatura LEFT JOIN uczestnicy ON kreatura.idKreatury=uczestnicy.id_uczestnika GROUP BY kreatura.nazwa;
+
+/Zad4.
+
+SELECT wyprawa.nazwa, SUM(LENGTH(etapy_wyprawy.dziennik)) FROM wyprawa INNER JOIN etapy_wyprawy ON etapy_wyprawy.idWyprawy=wyprawa.id_wyprawy GROUP BY wyprawa.nazwa HAVING SUM(LENGTH(etapy_wyprawy.dziennik))<400;
+
